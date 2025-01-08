@@ -35,7 +35,7 @@ class Calculator(QMainWindow):
         ]
         
         self.sound_effect = QSoundEffect()
-        self.sound_effect.setSource(QUrl.fromLocalFile("click.wav"))
+        self.sound_effect.setSource(QUrl.fromLocalFile(self.resource_path("click.wav")))
         
         for row in buttons:
             row_layout = QHBoxLayout()
@@ -81,6 +81,13 @@ class Calculator(QMainWindow):
         self.sound_effect.play()
         self.current_expression = ""
         self.display.setText("")
+
+    def resource_path(self, relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except AttributeError:
+            base_path = os.path.dirname(__file__)
+        return os.path.join(base_path, relative_path)
 
 def main():
     app = QApplication(sys.argv)
